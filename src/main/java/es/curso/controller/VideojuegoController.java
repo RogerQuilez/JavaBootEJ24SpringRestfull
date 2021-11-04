@@ -109,7 +109,6 @@ public class VideojuegoController {
 			BindingResult result) {
 		
 		Map<String, Object> response = new HashMap<>();
-		Videojuego updateVideojuego = videoService.findVideojuegoById(id);
 		
 		if (result.hasErrors()) {
 			
@@ -122,7 +121,7 @@ public class VideojuegoController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		if (updateVideojuego == null) {
+		if (videoService.findVideojuegoById(id) == null) {
 			response.put("mensaje", "El Videojuego con ID: " + id.toString() + " no existe en la base de datos!");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
