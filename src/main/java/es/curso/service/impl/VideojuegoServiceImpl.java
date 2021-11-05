@@ -38,4 +38,25 @@ public class VideojuegoServiceImpl implements VideojuegoService {
 		videoRepo.deleteById(id);
 	}
 
+	@Override
+	public List<Videojuego> findByCompania(String compania) {
+		return videoRepo.findByCompania(compania);
+	}
+
+	@Override
+	public List<Videojuego> findByNombre(String nombre) {
+		return videoRepo.findByNombre(nombre);
+	}
+
+	@Override
+	public double calcularTotal() {
+		double total = 0;
+		
+		for (Videojuego v: videoRepo.findAll()) {
+			total += v.getPrice();
+		}
+		
+		return total;
+	}
+
 }

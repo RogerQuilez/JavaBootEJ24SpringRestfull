@@ -52,6 +52,73 @@ public class VideojuegoController {
 		
 	}
 	
+	@GetMapping("/videojuegos/compania/{compania}")
+	public ResponseEntity<?> getVideojuegosByCompania(@PathVariable("compania") String compania) {
+		
+		Map<String, Object> response = new HashMap<>();
+		List<Videojuego> videojuegos = new LinkedList<Videojuego>();
+		
+		try {
+			videojuegos = videoService.findByCompania(compania);
+			
+		} catch (Exception e) {
+			
+			response.put("mensaje", "Error al realizar la consula a la base de datos");
+			response.put("error", e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if (videojuegos.isEmpty()) {
+			response.put("mensaje", "No hay videojuegos con esa compañia en la base de datos");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<List<Videojuego>>(videojuegos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/videojuegos/precioTotal")
+	public ResponseEntity<?> getTotalPrice() {
+		
+		Map<String, Object> response = new HashMap<>();
+		double precioTotal = 0;
+		
+		try {
+			precioTotal = videoService.calcularTotal();
+			
+		} catch (Exception e) {
+			
+			response.put("mensaje", "Error al realizar la consula a la base de datos");
+			response.put("error", e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<Double>(precioTotal, HttpStatus.OK);
+	}
+	
+	@GetMapping("/videojuegos/nombre/{nombre}")
+	public ResponseEntity<?> getVideojuegosByNombre(@PathVariable("nombre") String nombre) {
+		
+		Map<String, Object> response = new HashMap<>();
+		List<Videojuego> videojuegos = new LinkedList<Videojuego>();
+		
+		try {
+			videojuegos = videoService.findByNombre(nombre);
+			
+		} catch (Exception e) {
+			
+			response.put("mensaje", "Error al realizar la consula a la base de datos");
+			response.put("error", e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if (videojuegos.isEmpty()) {
+			response.put("mensaje", "No hay videojuegos con ese nombre en la base de datos");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<List<Videojuego>>(videojuegos, HttpStatus.OK);
+	}
+	
 	@GetMapping("/videojuegos/{id}")
 	public ResponseEntity<?> getCliente(@PathVariable("id") Integer id) {
 		
