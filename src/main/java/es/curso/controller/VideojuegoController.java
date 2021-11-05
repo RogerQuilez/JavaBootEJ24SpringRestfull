@@ -186,10 +186,15 @@ public class VideojuegoController {
 	}
 	
 	@PutMapping("/videojuegos/{id}")
-	public ResponseEntity<?> modificarVideojuego(@Valid @RequestBody Videojuego videojuego, @PathVariable("id") Integer id,
-			BindingResult result) {
+	public ResponseEntity<?> modificarVideojuego(@Valid @RequestBody Videojuego videojuego, 
+			@PathVariable("id") Integer id, BindingResult result) {
 		
 		Map<String, Object> response = new HashMap<>();
+		
+		if (videoService.findVideojuegoById(id) == null) {
+			response.put("mensaje", "El Videojuego con ID: " + id.toString() + " no existe en la base de datos!");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
 		
 		if (result.hasErrors()) {
 			
@@ -200,11 +205,6 @@ public class VideojuegoController {
 				
 			response.put("errors", listErrors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-		}
-		
-		if (videoService.findVideojuegoById(id) == null) {
-			response.put("mensaje", "El Videojuego con ID: " + id.toString() + " no existe en la base de datos!");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		videojuego.setId(id);
