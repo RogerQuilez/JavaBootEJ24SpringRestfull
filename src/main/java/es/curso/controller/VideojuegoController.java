@@ -70,7 +70,7 @@ public class VideojuegoController {
 		
 		if (videojuegos.isEmpty()) {
 			response.put("mensaje", "No hay videojuegos con esa compañia en la base de datos");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<List<Videojuego>>(videojuegos, HttpStatus.OK);
@@ -127,7 +127,7 @@ public class VideojuegoController {
 		
 		if (videojuegos.isEmpty()) {
 			response.put("mensaje", "No hay videojuegos con ese nombre en la base de datos");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<List<Videojuego>>(videojuegos, HttpStatus.OK);
