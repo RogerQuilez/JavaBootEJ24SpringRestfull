@@ -166,7 +166,7 @@ public class VideojuegoController {
 			
 			List<String> listErrors = new ArrayList<>();
 			for (FieldError err: result.getFieldErrors()) {
-				listErrors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
+				listErrors.add(err.getDefaultMessage());
 			}
 				
 			response.put("errors", listErrors);
@@ -200,7 +200,7 @@ public class VideojuegoController {
 			
 			List<String> listErrors = new ArrayList<>();
 			for (FieldError err: result.getFieldErrors()) {
-				listErrors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
+				listErrors.add(err.getDefaultMessage());
 			}
 				
 			response.put("errors", listErrors);
