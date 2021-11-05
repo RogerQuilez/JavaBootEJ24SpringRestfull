@@ -80,9 +80,12 @@ public class VideojuegoController {
 	public ResponseEntity<?> getTotalPrice() {
 		
 		Map<String, Object> response = new HashMap<>();
+		List<Videojuego> videojuegos = new LinkedList<Videojuego>();
+		List<String> listPrices = new ArrayList<>();
 		double precioTotal = 0;
 		
 		try {
+			videojuegos = videoService.getAllVideojuegos();
 			precioTotal = videoService.calcularTotal();
 			
 		} catch (Exception e) {
@@ -92,7 +95,18 @@ public class VideojuegoController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<Double>(precioTotal, HttpStatus.OK);
+		if (videojuegos.isEmpty()) {
+			response.put("mensaje", "No hay videojuegos con esa compañia en la base de datos");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		for (Videojuego v: videojuegos) {
+			listPrices.add(v.getNombre() + " Precio: " + v.getPrice());
+		}
+		
+		listPrices.add("Precio Total: " + precioTotal);
+		
+		return new ResponseEntity<List<String>>(listPrices, HttpStatus.OK);
 	}
 	
 	@GetMapping("/videojuegos/nombre/{nombre}")
