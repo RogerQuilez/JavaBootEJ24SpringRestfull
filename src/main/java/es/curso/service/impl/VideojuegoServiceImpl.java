@@ -40,12 +40,12 @@ public class VideojuegoServiceImpl implements VideojuegoService {
 
 	@Override
 	public List<Videojuego> findByCompania(String compania) {
-		return videoRepo.findByCompania(compania);
+		return videoRepo.findByCompaniaContaining(compania);
 	}
 
 	@Override
 	public List<Videojuego> findByNombre(String nombre) {
-		return videoRepo.findByNombre(nombre);
+		return videoRepo.findByNombreContaining(nombre);
 	}
 
 	@Override
